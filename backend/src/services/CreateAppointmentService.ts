@@ -2,8 +2,6 @@ import { startOfHour } from 'date-fns';
 import Appointment from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentRepository';
 
-const appointmentRepository = new AppointmentRepository();
-
 interface Request {
   provider: string;
   date: Date;
@@ -19,7 +17,7 @@ class CreateAppointmentService {
   public execute({ date, provider }: Request): Appointment {
     const appointmentDate = startOfHour(date);
 
-    const findAppopintmentInSameDate = appointmentRepository.findByDate(appointmentDate);
+    const findAppopintmentInSameDate = this.appointmentRepository.findByDate(appointmentDate);
 
     if (findAppopintmentInSameDate) {
       throw Error('This appointment is already booked');
